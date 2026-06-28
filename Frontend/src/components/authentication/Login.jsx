@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { USER_API_ENDPOINT } from "@/utils/data.js";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading, setUser } from "@/redux/authSlice";
+import { setAuthToken } from "@/utils/auth";
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -38,6 +39,7 @@ const Login = () => {
         withCredentials: true,
       });
       if (res.data.success) {
+        setAuthToken(res.data.token);
         dispatch(setUser(res.data.user));
         navigate("/");
         toast.success(res.data.message);

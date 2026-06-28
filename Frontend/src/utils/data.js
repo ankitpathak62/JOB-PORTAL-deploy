@@ -3,7 +3,7 @@
 // - Production (Netlify): set VITE_API_BASE_URL to the deployed backend URL
 //   (e.g. https://job-portal-deploy.onrender.com) in the Netlify env settings.
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:5011";
+  import.meta.env.VITE_API_BASE_URL ||"https://job-portal-deploy.onrender.com"|| "http://localhost:5011";
 
 export const USER_API_ENDPOINT = `${API_BASE_URL}/api/user`;
 export const JOB_API_ENDPOINT = `${API_BASE_URL}/api/job`;

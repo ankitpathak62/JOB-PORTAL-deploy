@@ -8,6 +8,10 @@ import { persistStore } from "redux-persist";
 
 import store from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
+import { initAuthToken } from "./utils/auth";
+
+// restore the saved auth token (if any) before the app renders
+initAuthToken();
 
 const persistor = persistStore(store);
 

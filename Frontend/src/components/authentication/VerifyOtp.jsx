@@ -8,6 +8,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/authSlice";
+import { setAuthToken } from "@/utils/auth";
 import { USER_API_ENDPOINT } from "@/utils/data";
 
 const VerifyOtp = () => {
@@ -50,7 +51,8 @@ const VerifyOtp = () => {
       );
       if (res.data.success) {
         toast.success(res.data.message);
-        // backend already logged us in (cookie + user) - go straight home
+        // backend already logged us in (token + user) - go straight home
+        setAuthToken(res.data.token);
         dispatch(setUser(res.data.user));
         navigate("/");
       }

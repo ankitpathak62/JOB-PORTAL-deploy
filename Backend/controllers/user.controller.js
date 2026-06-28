@@ -152,6 +152,7 @@ export const verifyOtp = async (req, res) => {
       .json({
         message: "Email verified successfully.",
         user: safeUser,
+        token, // also returned so cross-domain clients can use Bearer auth
         success: true,
       });
   } catch (error) {
@@ -344,6 +345,7 @@ export const login = async (req, res) => {
       .json({
         message: `Welcome back ${user.fullname}`,
         user,
+        token, // also returned so cross-domain clients can use Bearer auth
         success: true,
       });
   } catch (error) {

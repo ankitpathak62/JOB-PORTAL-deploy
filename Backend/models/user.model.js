@@ -19,6 +19,16 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    otp: {
+      type: String,
+    },
+    otpExpiry: {
+      type: Date,
+    },
     role: {
       type: String,
       enum: ["Student", "Recruiter"],
@@ -33,19 +43,19 @@ const userSchema = new mongoose.Schema(
       resume: {
         type: String, // URL to resume file
       },
-      resumeOriginalname: {
-        type: String, // Original name of resume file
-      },
       company: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Company",
       },
-      profilePhoto: {
-        type: String, // URL to profile photo file
-        default: "",
+        profilePhoto: {
+          type: String, // URL to profile photo file
+          default: "",
+        },
+      },
+      termsAcceptedAt: {
+        type: Date,
       },
     },
-  },
   { timestamps: true }
 );
 

@@ -18,6 +18,7 @@ import CompanySetup from "./components/admincomponent/CompanySetup";
 import AdminJobs from "./components/admincomponent/AdminJobs.jsx";
 import PostJob from "./components/admincomponent/PostJob";
 import Applicants from "./components/admincomponent/Applicants";
+import AllApplicants from "./components/admincomponent/AllApplicants";
 import ProtectedRoute from "./components/admincomponent/ProtectedRoute";
 import SavedJobs from "./components/components_lite/SavedJobs.jsx";
 import TermsAndConditions from "./components/components_lite/TermsAndConditions.jsx";
@@ -83,6 +84,14 @@ const appRouter = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <Companies />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/applicants",
+    element: (
+      <ProtectedRoute>
+        <AllApplicants />
       </ProtectedRoute>
     ),
   },

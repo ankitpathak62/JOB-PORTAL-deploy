@@ -67,6 +67,9 @@ const Navbar = () => {
                 <li>
                   <Link to={"/admin/jobs"} className="hover:text-[#FA4F09] transition-colors">Jobs</Link>
                 </li>
+                <li>
+                  <Link to={"/admin/applicants"} className="hover:text-[#FA4F09] transition-colors">Applicants</Link>
+                </li>
               </>
             ) : (
               <>
@@ -164,6 +167,9 @@ const Navbar = () => {
                 </li>
                 <li>
                   <Link to={"/admin/jobs"} onClick={() => setIsMenuOpen(false)} className="block py-2 hover:text-[#FA4F09]">Jobs</Link>
+                </li>
+                <li>
+                  <Link to={"/admin/applicants"} onClick={() => setIsMenuOpen(false)} className="block py-2 hover:text-[#FA4F09]">Applicants</Link>
                 </li>
               </>
             ) : (

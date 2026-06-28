@@ -8,6 +8,19 @@ import { sendOtpEmail } from "../utils/mailer.js";
 // make a random 6 digit OTP as a string
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
 
+// Cookie options. In production the frontend (Netlify) and backend (Render) are
+// on different domains, so the auth cookie needs sameSite "none" + secure:true.
+// Locally we keep "lax" so it works over http://localhost.
+const getCookieOptions = () => {
+  const isProduction = process.env.NODE_ENV?.includes("production");
+  return {
+    maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
+    httpOnly: true,
+    sameSite: isProduction ? "none" : "lax",
+    secure: isProduction,
+  };
+};
+
 export const register = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, password, role, termsAcceptedAt } = req.body;
@@ -135,11 +148,7 @@ export const verifyOtp = async (req, res) => {
 
     return res
       .status(200)
-      .cookie("token", token, {
-        maxAge: 1 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        sameSite: "Strict",
-      })
+      .cookie("token", token, getCookieOptions())
       .json({
         message: "Email verified successfully.",
         user: safeUser,
@@ -331,11 +340,7 @@ export const login = async (req, res) => {
 
     return res
       .status(200)
-      .cookie("token", token, {
-        maxAge: 1 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        sameSite: "Strict",
-      })
+      .cookie("token", token, getCookieOptions())
       .json({
         message: `Welcome back ${user.fullname}`,
         user,
@@ -352,7 +357,7 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
-      return res.status(200).cookie("token", "", { maxAge: 0 }).json({
+      return res.status(200).cookie("token", "", { ...getCookieOptions(), maxAge: 0 }).json({
           message: "Logged out successfully.",
           success: true
       })

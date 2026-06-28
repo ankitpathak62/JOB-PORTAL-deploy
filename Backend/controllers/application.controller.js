@@ -86,6 +86,32 @@ export const getApplicants = async (req, res) => {
   }
 };
 
+// All applicants across every job created by the logged-in recruiter.
+export const getRecruiterApplicants = async (req, res) => {
+  try {
+    const recruiterId = req.id;
+
+    // find all jobs posted by this recruiter
+    const jobs = await Job.find({ created_by: recruiterId }).select("_id");
+    const jobIds = jobs.map((job) => job._id);
+
+    // all applications for those jobs, newest first
+    const applications = await Application.find({ job: { $in: jobIds } })
+      .sort({ createdAt: -1 })
+      .populate("applicant")
+      .populate({
+        path: "job",
+        select: "title location jobType",
+        populate: { path: "company", select: "name" },
+      });
+
+    return res.status(200).json({ applications, success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error", success: false });
+  }
+};
+
 export const updateStatus = async (req, res) => {
   try {
     const { status } = req.body;
